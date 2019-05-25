@@ -65,14 +65,17 @@ def main():
     bandcamp = Bandcamp()
 
     basedir = arguments['--base-dir'] or os.getcwd()
-    session_file = "{}/{}.not.finished".format(basedir, __version__)
+    # session_file = "{}/{}.not.finished".format(basedir, __version__)
 
-    if os.path.isfile(session_file) and arguments['URL'] is None:
-        with open(session_file, "r") as f:
-            arguments = ast.literal_eval(f.readline())
-    else:
-        with open(session_file, "w") as f:
-            f.write("".join(str(arguments).split('\n')))
+    # when --album --artist && URL is None && isfile(session_file with basedir from os.getcwd())
+    # loses args over session file (invalid session file from previous run??)
+
+    # if os.path.isfile(session_file) and arguments['URL'] is None:
+    #     with open(session_file, "r") as f:
+    #         arguments = ast.literal_eval(f.readline())
+    # else:
+    #     with open(session_file, "w") as f:
+    #         f.write("".join(str(arguments).split('\n')))
 
     if arguments['--artist'] and arguments['--album']:
         url = Bandcamp.generate_album_url(arguments['--artist'], arguments['--album'], "album")
@@ -80,7 +83,7 @@ def main():
         url = Bandcamp.generate_album_url(arguments['--artist'], arguments['--track'], "track")
     elif arguments['--artist']:
         print(__doc__)
-        os.remove(session_file)
+        # os.remove(session_file)
         exit()
     else:
         url = arguments['URL']
@@ -107,7 +110,7 @@ def main():
         # Add a newline to stop prompt mangling
         print("")
     else:
-        logging.debug(" /!\ Something went horribly wrong /!\ ")
+        logging.debug(" /!\\ Something went horribly wrong /!\\ ")
 
 
 if __name__ == '__main__':
