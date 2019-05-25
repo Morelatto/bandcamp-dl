@@ -7,14 +7,16 @@ from bs4 import BeautifulSoup
 from bs4 import FeatureNotFound
 
 from bandcamp_dl.bandcampjson import BandcampJSON
-from bandcamp_dl.__init__ import __version__
+
+UA = \
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'
 
 
 class Bandcamp:
     def __init__(self):
-        self.headers = {'User-Agent': 'bandcamp-dl/{} (https://github.com/iheanyi/bandcamp-dl)'.format(__version__)}
+        self.headers = {'User-Agent': UA}
 
-    def parse(self, url: str, art: bool=True, lyrics: bool=False, debugging: bool=False) -> dict or None:
+    def parse(self, url: str, art: bool = True, lyrics: bool = False, debugging: bool = False) -> dict or None:
         """Requests the page, cherry picks album info
 
         :param url: album/track url

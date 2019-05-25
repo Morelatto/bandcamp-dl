@@ -18,9 +18,13 @@ from bandcamp_dl.__init__ import __version__
 
 from bandcamp_dl.utils.clean_print import print_clean
 
+UA = \
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'
+
 
 class BandcampDownloader:
-    def __init__(self, template, directory, overwrite, embed_lyrics, grouping, embed_art, no_slugify, debugging, urls=None):
+    def __init__(self, template, directory, overwrite, embed_lyrics, grouping, embed_art, no_slugify, debugging,
+                 urls=None):
         """Initialize variables we will need throughout the Class
 
         :param urls: list of urls
@@ -28,7 +32,7 @@ class BandcampDownloader:
         :param directory: download location
         :param overwrite: if True overwrite existing files
         """
-        self.headers = {'User-Agent': 'bandcamp-dl/{} (https://github.com/iheanyi/bandcamp-dl)'.format(__version__)}
+        self.headers = {'User-Agent': UA}
         self.session = requests.Session()
 
         if type(urls) is str:
@@ -52,16 +56,19 @@ class BandcampDownloader:
         if self.debugging:
             logging.basicConfig(level=logging.DEBUG)
 
-        if album['full'] is not True:
-            choice = input("Track list incomplete, some tracks may be private, download anyway? (yes/no): ").lower()
-            if choice == "yes" or choice == "y":
-                print("Starting download process.")
-                self.download_album(album)
-            else:
-                print("Cancelling download process.")
-                return None
-        else:
-            self.download_album(album)
+        # if album['full'] is not True:
+        #     choice = input("Track list incomplete, some tracks may be private, download anyway? (yes/no): ").lower()
+        #     if choice == "yes" or choice == "y":
+        #         print("Starting download process.")
+        #         self.download_album(album)
+        #     else:
+        #         print("Cancelling download process.")
+        #         return None
+        # else:
+        #     self.download_album(album)
+
+        print("Starting download process.")
+        self.download_album(album)
 
     def template_to_path(self, track: dict) -> str:
         """Create valid filepath based on template
