@@ -74,7 +74,7 @@ class Bandcamp:
 
         artist_url = album_json['url'].rpartition('/album/')[0]
         for track in self.tracks:
-            if lyrics:
+            if lyrics and track['title_link']:
                 track['lyrics'] = self.get_track_lyrics("{}{}#lyrics".format(artist_url, track['title_link']))
             if track['file'] is not None:
                 track = self.get_track_metadata(track)
